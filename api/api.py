@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/registeruser", methods=["POST"])
 def register_user():
-    conn = sqlite3.connect("C:\\Users\\Hasseen Sayed\\Desktop\\PingLite\\database.db")
+    conn = sqlite3.connect("database.db")
     cur = conn.cursor()
 
     user = User(
@@ -44,7 +44,7 @@ def register_user():
 
 @app.route("/getuser/<username>")
 def get_user(username):
-    with sqlite3.connect("C:\\Users\\Hasseen Sayed\\Desktop\\PingLite\\database.db") as conn:
+    with sqlite3.connect("database.db") as conn:
         cur = conn.cursor()
         query = "SELECT username, first_name, last_name, password FROM users where username like ?"
         res = cur.execute(query, (username, ))
