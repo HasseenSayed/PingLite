@@ -1,0 +1,21 @@
+import sqlite3
+
+# Connect to your SQLite database file
+connection = sqlite3.connect('database.db')
+cursor = connection.cursor()
+
+# Execute the table creation script
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY,
+        username VARCHAR(255),
+        first_name VARCHAR(255),
+        last_name VARCHAR(255),
+        password VARCHAR(255)
+    );
+''')
+
+# Commit changes and close the connection
+connection.commit()
+connection.close()
+

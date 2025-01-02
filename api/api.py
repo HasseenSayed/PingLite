@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/registeruser", methods=["POST"])
 def register_user():
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("../database.db")
     cur = conn.cursor()
 
     user = User(

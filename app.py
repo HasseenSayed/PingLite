@@ -8,8 +8,8 @@ app.wsgi_app = ProxyFix(
 )
 
 @app.route("/")
-def practice():
-    return render_template("base.html", title="Nigga", thing="Aw hell nahh they took practice legs =(")
+def home():
+    return render_template("home.html", title="Nigga")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
