@@ -63,14 +63,36 @@ def register_user():
             }
         }), 400
 
-"""
-@app.route("/getuser/<username>")
-def get_user(username):
-     with sqlite3.connect("database.db") as conn:
-        cur = conn.cursor()
-        query = "SELECT username, first_name, last_name, password FROM users where username like ?"
-        res = cur.execute(query, (username, ))
-        row = res.fetchone()
-        user = user.User(row[0], row[1], row[2], row[3])
-        return user.toJSON()
-"""
+
+@app.route("/loginuser", methods=["POST"])
+def get_user():
+    try:
+        with connect(
+            host=DB_HOST,
+            user=DB_USER,
+            password=DB_PASS,
+            database="ping"
+        ) as conn:
+            with conn.cursor as cur:
+                query = "SELECT * FROM users WHERE username = %s AND password = %s;"
+                cur.execute(query, (request.form['username'], request.form['password']))
+                account = cur.fetchone()
+                if account:
+                    return jsonify({
+                        'user_id': account['id']
+                    })
+                else:
+                    return jsonify({
+                        'error': {
+                            'code': 404,
+                            'message': 'Username or password incorrect'
+                        }
+                    })
+
+    except Error as e:
+        return jsonify({
+            'error': {
+                'code': 500,
+                'message': "Internal server error"
+            }
+        })
