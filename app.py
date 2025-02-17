@@ -8,11 +8,20 @@ app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1
 )
 
+user = None
+
 @app.route("/")
 def home():
     if 'loggedin' in session: 
         return render_template("home.html", loggedin=True)
     return render_template("home.html", title="Nigga")
+
+@app.route("/profile", methods=["GET"])
+def profile():
+    if 'loggedin' in session:
+        return render_template("profile.html")
+    else:
+        return redirect("/")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

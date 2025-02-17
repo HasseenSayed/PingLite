@@ -79,7 +79,11 @@ def get_user():
                 account = cur.fetchone()
                 if account:
                     return jsonify({
-                        'user_id': account['id']
+                        'succes': True
+                        'user_id': account['id'],
+                        'user_first_name': account['first_name'],
+                        'user_last_name': account['last_name'],
+                        'user_email': account['email']
                     })
                 else:
                     return jsonify({
