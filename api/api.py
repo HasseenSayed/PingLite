@@ -73,13 +73,13 @@ def get_user():
             password=DB_PASS,
             database="ping"
         ) as conn:
-            with conn.cursor as cur:
+            with conn.cursor() as cur:
                 query = "SELECT * FROM users WHERE username = %s AND password = %s;"
                 cur.execute(query, (request.form['username'], request.form['password']))
                 account = cur.fetchone()
                 if account:
                     return jsonify({
-                        'succes': True
+                        'succes': True,
                         'user_id': account['id'],
                         'user_first_name': account['first_name'],
                         'user_last_name': account['last_name'],
