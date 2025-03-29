@@ -73,11 +73,13 @@ def get_user():
             password=DB_PASS,
             database="ping"
         ) as conn:
-            with conn.cursor() as cur:
+            with conn.cursor(dictionary=True) as cur:
                 query = "SELECT * FROM users WHERE username = %s AND password = %s;"
                 cur.execute(query, (request.form['username'], request.form['password']))
                 account = cur.fetchone()
-                if account:
+                print(account)
+                if account is not None:
+                    print("success")
                     return jsonify({
                         'succes': True,
                         'user_id': account['id'],
@@ -86,12 +88,13 @@ def get_user():
                         'user_email': account['email']
                     })
                 else:
+                    print("error")
                     return jsonify({
                         'error': {
                             'code': 404,
                             'message': 'Username or password incorrect'
                         }
-                    })
+                    }), 404
 
     except Error as e:
         return jsonify({
@@ -99,4 +102,4 @@ def get_user():
                 'code': 500,
                 'message': "Internal server error"
             }
-        })
+        }), 500

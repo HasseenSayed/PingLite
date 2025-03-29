@@ -13,7 +13,7 @@ user = None
 @app.route("/")
 def home():
     if 'loggedin' in session: 
-        return render_template("home.html", loggedin=True)
+        return render_template("home.html")
     return render_template("home.html", title="Nigga")
 
 @app.route("/profile", methods=["GET"])
@@ -28,6 +28,7 @@ def login():
     if request.method == "POST":
         print(request.get_data())
         res = requests.post("http://127.0.0.1:6000/loginuser", data=request.form.to_dict())
+        print(res.status_code)
         if res.status_code == 404:
             print("Login failed")
             return render_template("login_error.html", content="Username/password error.")
