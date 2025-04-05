@@ -1,6 +1,6 @@
 from mysql.connector import connect, Error
 from flask import Flask, jsonify, request
-from user import User
+from models import User
 
 app = Flask(__name__)
 
