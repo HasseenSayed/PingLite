@@ -42,10 +42,6 @@ def login():
             print("Login failed")
             return render_template("login_error.html", content="Username/password error.")
         else:
-            session['loggedin'] = True
-            session['username'] = request.form['username']
-            session['password'] = request.form['password']
-            
             # If the API returns user data, store it in session
             try:
                 response_data = res.json()
